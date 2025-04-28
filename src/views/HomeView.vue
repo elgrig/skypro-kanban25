@@ -2,7 +2,6 @@
 import BaseHeader from '@/components/BaseHeader.vue';
 import ExitModal from '@/components/ExitModal.vue';
 import NewCardModal from '@/components/NewCardModal.vue';
-import TaskColumn from '@/components/TaskColumn.vue';
 import TaskDesk from '@/components/TaskDesk.vue';
 import TaskTask from '@/components/TaskTask.vue';
 </script>
