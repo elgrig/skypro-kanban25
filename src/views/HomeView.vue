@@ -5,7 +5,7 @@ import ExitModal from '@/components/ExitModal.vue';
 import NewCardModal from '@/components/NewCardModal.vue';
 import TaskDesk from '@/components/TaskDesk.vue';
 import { onMounted, ref } from 'vue';
-import Loader from '@/components/Loader.vue';
+import BaseLoader from '@/components/BaseLoader.vue';
 
 const loading = ref(true);
 onMounted(() => {
@@ -30,7 +30,7 @@ onMounted(() => {
 
 		<BaseHeader />
 		<main class="main" :loading="loading">
-      <Transition name="loading"><Loader v-if="loading" />
+      <Transition name="loading"><BaseLoader v-if="loading" />
 			<TaskDesk v-else />
       </Transition>
 		</main>
