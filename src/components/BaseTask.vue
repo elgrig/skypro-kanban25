@@ -1,10 +1,9 @@
 <template>
-  <div v-for="task in taskList" :key="task.id">
-    <div  class="cards__item">
+     <div  class="cards__item">
 									<div class="cards__card card">
 										<div class="card__group">
-											<div class="card__theme _orange">
-												<p class="_orange">{{ task.topic }}</p>
+											<div class="card__theme" :class="topicsColor[task.topic]">
+												<p>{{ task.topic }}</p>
 											</div>
 											<a href="#popBrowse" target="_self">
 												<div class="card__btn">
@@ -35,11 +34,17 @@
 										</div>
 									</div>
 								</div>
-  </div>
 </template>
 
 <script setup>
-import { taskList } from './tasks';
+defineProps ({
+  task: Object,
+})
+const topicsColor = {
+  'Research': "_green",
+  'Web Design': "_orange",
+  'Copywriting': "_purple"
+}
 </script>
 
 <style lang="scss" scoped>

@@ -30,9 +30,9 @@ onMounted(() => {
 
 		<BaseHeader />
 		<main class="main" :loading="loading">
-      <Transition name="loading"><Loader v-show="loading" /></Transition>
-			<TaskDesk v-show="!loading"/>
-      <!-- <div>Задач нет</div> -->
+      <Transition name="loading"><Loader v-if="loading" />
+			<TaskDesk v-else />
+      </Transition>
 		</main>
 
     </div>

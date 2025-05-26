@@ -5,10 +5,11 @@
         <p>{{ title }}</p>
       </div>
       <div class="cards">
-      <BaseTask
-          v-for="task of taskList"
-          :key="task.id"
-      />
+      <div v-for="task in taskList.filter((item) => item.status === title)" :key="task.id">
+        <BaseTask
+          :task="task"
+        />
+      </div>
 		</div>
     </div>
   </div>
@@ -25,6 +26,6 @@ defineProps({
 
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>
