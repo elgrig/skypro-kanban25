@@ -1,49 +1,23 @@
 <template>
   <div class="container">
-
-<div class="main__block">
-  <div class="main__content">
-    <div class="main__column column">
-      <div class="column__title">
-        <p>Без статуса</p>
+    <div class="main__block">
+      <div class="main__content">
+        <div v-if="taskList.length === 0">Задач нет</div>
+        <template v-else>
+        <TaskColumn title="Без статуса" />
+        <TaskColumn title="Нужно сделать" iscolumn="false" />
+        <TaskColumn title="В работе" iscolumn="false" />
+        <TaskColumn title="Тестирование" iscolumn="false"/>
+        <TaskColumn title="Готово" iscolumn="false"/>
+        </template>
       </div>
-      <TaskColumn />
     </div>
-    <div class="main__column">
-      <div class="column__title">
-        <p>Нужно сделать</p>
-      </div>
-      <TaskColumn />
-    </div>
-    <div class="main__column">
-      <div class="column__title">
-        <p>В работе</p>
-      </div>
-      <TaskColumn />
-    </div>
-    <div class="main__column">
-      <div class="column__title">
-        <p>Тестирование</p>
-      </div>
-      <TaskColumn />
-    </div>
-    <div class="main__column">
-      <div class="column__title">
-        <p>Готово</p>
-      </div>
-      <TaskColumn />
-    </div>
-
-
   </div>
-
-</div>
-</div>
 </template>
 
 <script setup>
 import TaskColumn from './TaskColumn.vue';
-
+import { taskList } from './tasks';
 
 </script>
 
