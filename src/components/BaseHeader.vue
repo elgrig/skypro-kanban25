@@ -19,7 +19,7 @@
 							<div class="pop-user-set__theme">
 								<p>Темная тема</p>
 								<input type="checkbox" class="checkbox" name="checkbox">
-													<button @click="closeShowModal" type="button" class="_hover03"><a href="#popExit" >Выйти</a></button>
+													<button @click="closeShowModal" type="button" class="_hover03"><a href="#popExit">Выйти</a></button>
               </div>
 						</div>
 					</nav>
