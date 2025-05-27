@@ -1,13 +1,13 @@
 <script setup>
-import BaseHeader from '@/components/BaseHeader.vue';
-import EditTask from '@/components/EditTask.vue';
-import ExitModal from '@/components/ExitModal.vue';
-import NewCardModal from '@/components/NewCardModal.vue';
-import TaskDesk from '@/components/TaskDesk.vue';
-import { onMounted, ref } from 'vue';
-import BaseLoader from '@/components/BaseLoader.vue';
+import BaseHeader from '@/components/BaseHeader.vue'
+import EditTask from '@/components/EditTask.vue'
+import ExitModal from '@/components/ExitModal.vue'
+import NewCardModal from '@/components/NewCardModal.vue'
+import TaskDesk from '@/components/TaskDesk.vue'
+import { onMounted, ref } from 'vue'
+import BaseLoader from '@/components/BaseLoader.vue'
 
-const loading = ref(true);
+const loading = ref(true)
 onMounted(() => {
   setTimeout(() => {
     loading.value = false
@@ -17,24 +17,24 @@ onMounted(() => {
 
 <template>
   <main>
-    <div class="wrapper">
-		<!-- pop-up start-->
+    <div class="">
+      <!-- pop-up start-->
 
-			<ExitModal />
+      <ExitModal />
 
-			<NewCardModal />
+      <NewCardModal />
 
-			<EditTask />
+      <EditTask />
 
-		<!-- pop-up end-->
+      <!-- pop-up end-->
 
-		<BaseHeader />
-		<main class="main" :loading="loading">
-      <Transition name="loading"><BaseLoader v-if="loading" />
-			<TaskDesk v-else />
-      </Transition>
-		</main>
-
+      <BaseHeader />
+      <main class="main" :loading="loading">
+        <Transition name="loading"
+          ><BaseLoader v-if="loading" />
+          <TaskDesk v-else />
+        </Transition>
+      </main>
     </div>
   </main>
 </template>
@@ -42,14 +42,14 @@ onMounted(() => {
 <style lang="scss" scoped>
 .loading-enter-active,
 .loading-leave-active {
-transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 .loading-enter-from,
 .loading-leave-to {
-opacity: 0;
+  opacity: 0;
 }
 .loading-leave-from,
 .loading-enter-to {
-opacity: 1;
+  opacity: 1;
 }
 </style>
