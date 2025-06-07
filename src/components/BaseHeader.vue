@@ -10,16 +10,15 @@
 						<a href="" target="_self"><img src="../assets/images/images/logo_dark.png" alt="logo"></a>
 					</div>
 					<nav class="header__nav">
-						<button class="header__btn-main-new _hover01" id="btnMainNew"><a href="#popNewCard">Создать новую задачу</a></button>
-						<a href="#user-set-target" @click="openShowModal" class="header__user _hover02">Ivan Ivanov</a>
+						<button class="header__btn-main-new _hover01" id="btnMainNew">Создать новую задачу</button>
+						<a href="#user-set-target" @click="toggleShowModal" class="header__user _hover02">Ivan Ivanov</a>
 						<div v-if="showModal" class="header__pop-user-set pop-user-set" id="user-set-target">
-							<!-- <a href="">x</a> -->
 							<p class="pop-user-set__name">Ivan Ivanov</p>
 							<p class="pop-user-set__mail">ivan.ivanov@gmail.com</p>
 							<div class="pop-user-set__theme">
 								<p>Темная тема</p>
 								<input type="checkbox" class="checkbox" name="checkbox">
-													<button @click="closeShowModal" type="button" class="_hover03"><a href="#popExit">Выйти</a></button>
+													<button type="button" class="_hover03">Выйти</button>
               </div>
 						</div>
 					</nav>
@@ -33,13 +32,9 @@
 import { ref } from 'vue';
 
 const showModal = ref(false);
-const openShowModal = () => {
-  showModal.value = true
+const toggleShowModal = () => {
+  showModal.value = !showModal.value
 }
-const closeShowModal = () => {
-  showModal.value = false
-}
-
 </script>
 
 <style lang="scss" scoped>
