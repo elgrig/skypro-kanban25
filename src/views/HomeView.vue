@@ -1,8 +1,5 @@
 <script setup>
 import BaseHeader from '@/components/BaseHeader.vue'
-import EditTask from '@/components/EditTask.vue'
-import ExitModal from '@/components/ExitModal.vue'
-import NewCardModal from '@/components/NewCardModal.vue'
 import TaskDesk from '@/components/TaskDesk.vue'
 import { onMounted, ref } from 'vue'
 import BaseLoader from '@/components/BaseLoader.vue'
@@ -22,9 +19,9 @@ onMounted(() => {
 
       <ExitModal />
 
-      <NewCardModal />
+      <NewTaskModal />
 
-      <EditTask />
+      <EditTaskModal />
 
       <!-- pop-up end-->
 
