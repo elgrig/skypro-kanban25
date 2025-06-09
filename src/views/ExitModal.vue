@@ -32,12 +32,6 @@
   left: 0;
   z-index: 5;
 }
-.pop-exit__form-group {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 .pop-exit__container {
   width: 100%;
   height: 100%;
@@ -67,6 +61,15 @@
   line-height: 30px;
   letter-spacing: -0.4px;
   margin-bottom: 20px;
+}
+/* .pop-exit__form {
+что тут должно быть??? В верстке этого стиля нет, но без него кнопки стоят криво.
+} */
+.pop-exit__form-group {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .pop-exit__exit-yes {
   width: 153px;
@@ -107,15 +110,33 @@
   line-height: 21px;
   font-weight: 500;
   letter-spacing: -0.14px;
-  color: #FFFFFF;
+  color:#565EEF;
 }
 .pop-exit__exit-no a {
   width: 100%;
   height: 100%;
-  color: #565EEF;
+  color:  #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+._hover01:hover {
+  background-color: #33399b;
+}
 
+._hover02:hover, .header__user:hover {
+  color: #33399b;
+}
+._hover02:hover::after, .header__user:hover::after {
+  border-left-color: #33399b;
+  border-bottom-color: #33399b;
+}
+
+._hover03:hover {
+  background-color: #33399b;
+  color: #FFFFFF;
+}
+._hover03:hover a {
+  color: #FFFFFF;
+}
 </style>

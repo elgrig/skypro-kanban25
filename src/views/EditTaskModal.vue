@@ -121,7 +121,7 @@
 									<button class="btn-browse__edit _btn-bor _hover03"><a href="#">Редактировать задачу</a></button>
 									<button class="btn-browse__delete _btn-bor _hover03"><a href="#">Удалить задачу</a></button>
 								</div>
-								<button class="btn-browse__close _btn-bg _hover01"><a href="#">Закрыть</a></button>
+								<RouterLink to="/"><button class="btn-browse__close _btn-bg _hover01">Закрыть</button></RouterLink>
 							</div>
 							<div class="pop-browse__btn-edit _hide">
 								<div class="btn-group">
@@ -129,9 +129,8 @@
 									<button class="btn-edit__edit _btn-bor _hover03"><a href="#">Отменить</a></button>
 									<button class="btn-edit__delete _btn-bor _hover03" id="btnDelete"><a href="#">Удалить задачу</a></button>
 								</div>
-								<RouterLink to="/"><button class="btn-edit__close _btn-bg _hover01"><a href="#">Закрыть</a></button></RouterLink>
+								<button class="btn-edit__close _btn-bg _hover01">Закрыть</button>
 							</div>
-
 						</div>
 					</div>
 				</div>
@@ -140,6 +139,18 @@
 
 <script setup>
 import { RouterLink } from 'vue-router';
+import { useRouter } from 'vue-router';
+import { computed } from 'vue';
+import { taskList } from '@/components/tasks';
+
+const route = useRouter();
+const task = computed(() => {
+  return taskList.value.find((task) => task.id === route.params.id || {
+    name: '',
+    translation: '',
+  })
+})
+
 </script>
 
 <style lang="scss" scoped>
@@ -453,6 +464,25 @@ import { RouterLink } from 'vue-router';
 
 ._dark {
   display: none;
+}
+._hover01:hover {
+  background-color: #33399b;
+}
+
+._hover02:hover, .header__user:hover {
+  color: #33399b;
+}
+._hover02:hover::after, .header__user:hover::after {
+  border-left-color: #33399b;
+  border-bottom-color: #33399b;
+}
+
+._hover03:hover {
+  background-color: #33399b;
+  color: #FFFFFF;
+}
+._hover03:hover a {
+  color: #FFFFFF;
 }
 
 </style>

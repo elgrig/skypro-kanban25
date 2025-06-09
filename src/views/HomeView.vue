@@ -17,9 +17,9 @@ onMounted(() => {
     <div class="">
       <BaseHeader />
       <main class="main" :loading="loading">
-        <Transition name="loading"
-          ><BaseLoader v-if="loading" />
-          <TaskDesk v-else />
+        <Transition name="loading">
+        <BaseLoader v-if="loading" />
+        <TaskDesk v-else />
         </Transition>
       </main>
       <RouterView />

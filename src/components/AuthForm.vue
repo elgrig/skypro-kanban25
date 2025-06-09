@@ -13,7 +13,7 @@
 						<button class="modal__btn-enter _hover01" id="btnEnter"><a href="../main.html">Войти</a></button>
 						<div class="modal__form-group">
 							<p>{{ isSignUp ? 'Уже есть аккаунт?' : 'Нужно зарегистрироваться?' }}</p>
-							<a href="signup.html">{{ isSignUp ? 'Войдите здесь' : 'Регистрируйтесь здесь' }}</a>
+							<RouterLink to="/sign-up"><a>{{ isSignUp ? 'Войдите здесь' : 'Регистрируйтесь здесь' }}</a></RouterLink>
 						</div>
 					</form>
 				</div>

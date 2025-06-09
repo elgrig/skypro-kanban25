@@ -5,7 +5,7 @@
 											<div class="card__theme" :class="topicsColor[task.topic]">
 												<p>{{ task.topic }}</p>
 											</div>
-											<RouterLink to="/edit"><a target="_self">
+											<RouterLink to="/task/:id"><a target="_self">
 												<div class="card__btn">
 													<div></div>
 													<div></div>
@@ -37,6 +37,7 @@
 </template>
 
 <script setup>
+
 defineProps ({
   task: Object,
 })

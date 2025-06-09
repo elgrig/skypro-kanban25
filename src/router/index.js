@@ -19,11 +19,14 @@ const router = createRouter({
         component: () => import('../views/ExitModal.vue')
       },
       {
-        path: '/edit',
-        name: 'edit',
+        path: '/task/:id',
+        name: 'task',
         component: () => import('../views/EditTaskModal.vue')
       }
       ],
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: '/sign-in',
