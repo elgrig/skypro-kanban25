@@ -5,13 +5,13 @@
 											<div class="card__theme" :class="topicsColor[task.topic]">
 												<p>{{ task.topic }}</p>
 											</div>
-											<a href="#popBrowse" target="_self">
+											<RouterLink to="/edit"><a target="_self">
 												<div class="card__btn">
 													<div></div>
 													<div></div>
 													<div></div>
 												</div>
-											</a>
+											</a></RouterLink>
 										</div>
 										<div class="card__content">
 											<a href="" target="_blank">

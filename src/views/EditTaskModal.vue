@@ -129,7 +129,7 @@
 									<button class="btn-edit__edit _btn-bor _hover03"><a href="#">Отменить</a></button>
 									<button class="btn-edit__delete _btn-bor _hover03" id="btnDelete"><a href="#">Удалить задачу</a></button>
 								</div>
-								<button class="btn-edit__close _btn-bg _hover01"><a href="#">Закрыть</a></button>
+								<RouterLink to="/"><button class="btn-edit__close _btn-bg _hover01"><a href="#">Закрыть</a></button></RouterLink>
 							</div>
 
 						</div>
@@ -139,11 +139,150 @@
 </template>
 
 <script setup>
+import { RouterLink } from 'vue-router';
 </script>
 
 <style lang="scss" scoped>
+.calendar {
+  width: 182px;
+  margin-bottom: 20px;
+}
+.calendar__ttl {
+  margin-bottom: 14px;
+  padding: 0 7px;
+}
+.calendar__p {
+  color: #94A6BE;
+  font-size: 10px;
+  line-height: 1;
+}
+.calendar__p span {
+  color: #000000;
+}
+.calendar__block {
+  display: block;
+}
+.calendar__month {
+  color: #94A6BE;
+  font-size: 14px;
+  line-height: 25px;
+  font-weight: 600;
+}
+.calendar__content {
+  margin-bottom: 12px;
+}
+.calendar__days-names {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  margin: 7px 0;
+  padding: 0 7px;
+}
+.calendar__day-name {
+  color: #94A6BE;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.2px;
+}
+.calendar__cells {
+  width: 182px;
+  height: 126px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.calendar__cell {
+  width: 22px;
+  height: 22px;
+  margin: 2px;
+  border-radius: 50%;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  color: #94A6BE;
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: -0.2px;
+  cursor: pointer;
+}
+.calendar__nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding: 0 7px;
+}
+.calendar__period {
+  padding: 0 7px;
+}
+
+.nav__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav__action {
+  width: 18px;
+  height: 25px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav__action svg {
+  fill: #94A6BE;
+}
+
+._other-month {
+  opacity: 0;
+}
+
+._cell-day:hover {
+  color: #94A6BE;
+  background-color: #EAEEF6;
+}
+
+._active-day {
+  background-color: #94A6BE;
+  color: #FFFFFF;
+}
+
+._current {
+  font-weight: 700;
+}
+
+.categories {
+  margin-bottom: 20px;
+}
+.categories__themes {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.categories__p {
+  margin-bottom: 14px;
+}
+.categories__theme {
+  display: inline-block;
+  width: auto;
+  height: 30px;
+  padding: 8px 20px;
+  border-radius: 24px;
+  margin-right: 7px;
+  opacity: 0.4;
+}
+.categories__theme p {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14px;
+  white-space: nowrap;
+}
 .pop-browse {
-  display: none;
+  display: block;
   width: 100%;
   height: 100%;
   min-width: 375px;
@@ -153,7 +292,6 @@
   left: 0;
   z-index: 7;
 }
-
 .pop-browse__container {
   width: 100%;
   height: 100%;
@@ -316,4 +454,5 @@
 ._dark {
   display: none;
 }
+
 </style>

@@ -15,16 +15,6 @@ onMounted(() => {
 <template>
   <main>
     <div class="">
-      <!-- pop-up start-->
-
-      <ExitModal />
-
-      <NewTaskModal />
-
-      <EditTaskModal />
-
-      <!-- pop-up end-->
-
       <BaseHeader />
       <main class="main" :loading="loading">
         <Transition name="loading"
@@ -32,6 +22,7 @@ onMounted(() => {
           <TaskDesk v-else />
         </Transition>
       </main>
+      <RouterView />
     </div>
   </main>
 </template>

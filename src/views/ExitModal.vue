@@ -7,8 +7,8 @@
 						</div>
 						<form class="pop-exit__form" id="formExit" action="#">
 							<div class="pop-exit__form-group">
-								<button class="pop-exit__exit-yes _hover01" id="exitYes"><a href="modal/signin.html">Да, выйти</a> </button>
-								<button class="pop-exit__exit-no _hover03" id="exitNo"><a href="main.html">Нет, остаться</a> </button>
+								<RouterLink to="/sign-in"><button class="pop-exit__exit-yes _hover01" id="exitYes">Да, выйти</button></RouterLink>
+								<RouterLink to="/"><button class="pop-exit__exit-no _hover03" id="exitNo">Нет, остаться</button></RouterLink>
 							</div>
 						</form>
 					</div>
@@ -22,7 +22,7 @@
 
 <style lang="scss" scoped>
 .pop-exit {
-  display: none;
+  display: block;
   width: 100%;
   height: 100%;
   min-width: 320px;
@@ -31,6 +31,12 @@
   top: 0;
   left: 0;
   z-index: 5;
+}
+.pop-exit__form-group {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .pop-exit__container {
   width: 100%;
@@ -111,10 +117,5 @@
   align-items: center;
   justify-content: center;
 }
-.pop-exit__form-group {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+
 </style>

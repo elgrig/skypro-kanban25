@@ -8,6 +8,22 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+      children: [ {
+        path: '/task/add',
+        name: 'task/add',
+        component: () => import('../views/NewTaskModal.vue'),
+      },
+      {
+        path: '/exit',
+        name: 'exit',
+        component: () => import('../views/ExitModal.vue')
+      },
+      {
+        path: '/edit',
+        name: 'edit',
+        component: () => import('../views/EditTaskModal.vue')
+      }
+      ],
     },
     {
       path: '/sign-in',
@@ -18,6 +34,10 @@ const router = createRouter({
       path: '/sign-up',
       name: 'sign-up',
       component: () => import('../views/SignUpView.vue'),
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      component: () => import('../views/NotFoundView.vue'),
     }
   ],
 })
