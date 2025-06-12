@@ -10,10 +10,10 @@
             <input v-show="isSignUp" class="modal__input first-name" type="text" name="first-name" id="first-name" placeholder="Имя">
 						<input class="modal__input" type="text" name="login" id="formlogin" placeholder="Эл. почта">
 						<input class="modal__input" type="password" name="password" id="formpassword" placeholder="Пароль">
-						<button class="modal__btn-enter _hover01" id="btnEnter"><a href="../main.html">Войти</a></button>
+						<button class="modal__btn-enter _hover01" id="btnEnter"><a :onClick="handleSignIn" >Войти</a></button>
 						<div class="modal__form-group">
 							<p>{{ isSignUp ? 'Уже есть аккаунт?' : 'Нужно зарегистрироваться?' }}</p>
-							<RouterLink to="/sign-up"><a>{{ isSignUp ? 'Войдите здесь' : 'Регистрируйтесь здесь' }}</a></RouterLink>
+							<RouterLink :to="isSignUp ? '/sign-in' : '/sign-up'"><a>{{ isSignUp ? 'Войдите здесь' : 'Регистрируйтесь здесь' }}</a></RouterLink>
 						</div>
 					</form>
 				</div>
@@ -23,9 +23,19 @@
 </template>
 
 <script setup>
+import { useRouter } from "vue-router";
+
 defineProps ({
   isSignUp: Boolean,
 })
+
+const router = useRouter() // Инициализация роутера
+
+async function handleSignIn(e) {
+   e.preventDefault() // Предотвращаем перезагрузку страницы
+   localStorage.setItem('userInfo', 'true') // Сохраняем флаг авторизации
+   router.push('/') // Перенаправляем на главную страницу
+}
 </script>
 
 <style lang="scss" scoped>

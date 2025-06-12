@@ -5,13 +5,14 @@
 											<div class="card__theme" :class="topicsColor[task.topic]">
 												<p>{{ task.topic }}</p>
 											</div>
-											<RouterLink to="/task/:id"><a target="_self">
+											<RouterLink :to="'/task/'+ task.id"><a target="_self">
 												<div class="card__btn">
 													<div></div>
 													<div></div>
 													<div></div>
 												</div>
-											</a></RouterLink>
+											</a>
+                      </RouterLink>
 										</div>
 										<div class="card__content">
 											<a href="" target="_blank">
@@ -37,15 +38,19 @@
 </template>
 
 <script setup>
+import { useRoute } from 'vue-router';
+import { taskList } from './tasks';
 
 defineProps ({
   task: Object,
 })
+
 const topicsColor = {
   'Research': "_green",
   'Web Design': "_orange",
   'Copywriting': "_purple"
 }
+
 </script>
 
 <style scoped>

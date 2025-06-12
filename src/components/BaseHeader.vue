@@ -19,7 +19,6 @@
 								<p>Темная тема</p>
 								<input type="checkbox" class="checkbox" name="checkbox">
 								<button @click="$router.push('/exit')" type="button" class="_hover03">Выйти</button>
-                <RouterView />
               </div>
 						</div>
 					</nav>
@@ -31,7 +30,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import { RouterView } from 'vue-router';
 
 const showModal = ref(false);
 const toggleShowModal = () => {
