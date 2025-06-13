@@ -1,39 +1,19 @@
 <template>
-<div class="pop-browse" id="popBrowse">
-				<div class="pop-browse__container">
-					<div class="pop-browse__block">
-						<div class="pop-browse__content">
-							<div class="pop-browse__top-block">
-								<h3 class="pop-browse__ttl">Название задачи</h3>
-								<div class="categories__theme theme-top _orange _active-category">
-									<p class="_orange">Web Design</p>
-								</div>
-							</div>
-							<div class="pop-browse__status status">
-								<p class="status__p subttl">Статус</p>
-								<div class="status__themes">
-									<div class="status__theme _hide">
-										<p>Без статуса</p>
+<div class="pop-new-card" id="popNewCard">
+				<div class="pop-new-card__container">
+					<div class="pop-new-card__block">
+						<div class="pop-new-card__content">
+							<h3 class="pop-new-card__ttl">Создание задачи</h3>
+							<RouterLink to="/"><a href="#" class="pop-new-card__close">&#10006;</a></RouterLink>
+							<div class="pop-new-card__wrap">
+								<form class="pop-new-card__form form-new" id="formNewCard" action="#">
+									<div class="form-new__block">
+										<label for="formTitle" class="subttl">Название задачи</label>
+										<input class="form-new__input" type="text" name="name" id="formTitle" placeholder="Введите название задачи..." autofocus>
 									</div>
-									<div class="status__theme _gray">
-										<p class="_gray">Нужно сделать</p>
-									</div>
-									<div class="status__theme _hide">
-										<p>В работе</p>
-									</div>
-									<div class="status__theme _hide">
-										<p>Тестирование</p>
-									</div>
-									<div class="status__theme _hide">
-										<p>Готово</p>
-									</div>
-								</div>
-							</div>
-							<div class="pop-browse__wrap">
-								<form class="pop-browse__form form-browse" id="formBrowseCard" action="#">
-									<div class="form-browse__block">
-										<label for="textArea01" class="subttl">Описание задачи</label>
-										<textarea class="form-browse__area" name="text" id="textArea01"  readonly placeholder="Введите описание задачи..."></textarea>
+									<div class="form-new__block">
+										<label for="textArea" class="subttl">Описание задачи</label>
+										<textarea class="form-new__area" name="text" id="textArea"  placeholder="Введите описание задачи..."></textarea>
 									</div>
 								</form>
 								<div class="pop-new-card__calendar calendar">
@@ -77,7 +57,7 @@
 												<div class="calendar__cell _cell-day ">6</div>
 												<div class="calendar__cell _cell-day">7</div>
 												<div class="calendar__cell _cell-day _current">8</div>
-												<div class="calendar__cell _cell-day _weekend _active-day">9</div>
+												<div class="calendar__cell _cell-day _weekend">9</div>
 												<div class="calendar__cell _cell-day _weekend">10</div>
 												<div class="calendar__cell _cell-day">11</div>
 												<div class="calendar__cell _cell-day">12</div>
@@ -105,33 +85,26 @@
 
 										<input type="hidden" id="datepick_value" value="08.09.2023">
 										<div class="calendar__period">
-											<p class="calendar__p date-end">Срок исполнения: <span class="date-control">09.09.23</span></p>
+											<p class="calendar__p date-end">Выберите срок исполнения <span class="date-control"></span>.</p>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="theme-down__categories theme-down">
+							<div class="pop-new-card__categories categories">
 								<p class="categories__p subttl">Категория</p>
-								<div class="categories__theme _orange _active-category">
-									<p class="_orange">Web Design</p>
+								<div class="categories__themes">
+									<div class="categories__theme _orange _active-category">
+										<p class="_orange">Web Design</p>
+									</div>
+									<div class="categories__theme _green">
+										<p class="_green">Research</p>
+									</div>
+									<div class="categories__theme _purple">
+										<p class="_purple">Copywriting</p>
+									</div>
 								</div>
 							</div>
-							<div class="pop-browse__btn-browse ">
-								<div class="btn-group">
-									<button class="btn-browse__edit _btn-bor _hover03"><a href="#">Редактировать задачу</a></button>
-									<button class="btn-browse__delete _btn-bor _hover03"><a href="#">Удалить задачу</a></button>
-								</div>
-								<button class="btn-browse__close _btn-bg _hover01"><a href="#">Закрыть</a></button>
-							</div>
-							<div class="pop-browse__btn-edit _hide">
-								<div class="btn-group">
-									<button class="btn-edit__edit _btn-bg _hover01"><a href="#">Сохранить</a></button>
-									<button class="btn-edit__edit _btn-bor _hover03"><a href="#">Отменить</a></button>
-									<button class="btn-edit__delete _btn-bor _hover03" id="btnDelete"><a href="#">Удалить задачу</a></button>
-								</div>
-								<button class="btn-edit__close _btn-bg _hover01"><a href="#">Закрыть</a></button>
-							</div>
-
+							<button class="form-new__create _hover01" id="btnCreate">Создать задачу</button>
 						</div>
 					</div>
 				</div>
@@ -139,22 +112,22 @@
 </template>
 
 <script setup>
+import { RouterLink } from 'vue-router';
 </script>
 
 <style lang="scss" scoped>
-.pop-browse {
-  display: none;
+.pop-new-card {
+  display: block;
   width: 100%;
-  height: 100%;
   min-width: 375px;
+  height: 100%;
   min-height: 100vh;
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 7;
+  z-index: 6;
 }
-
-.pop-browse__container {
+.pop-new-card__container {
   width: 100%;
   height: 100%;
   min-height: 100vh;
@@ -165,155 +138,244 @@
   justify-content: center;
   background: rgba(0, 0, 0, 0.4);
 }
-.pop-browse__block {
+.pop-new-card__block {
   display: block;
   margin: 0 auto;
   background-color: #FFFFFF;
   max-width: 630px;
   width: 100%;
-  padding: 40px 30px 38px;
+  padding: 40px 30px 48px;
   border-radius: 10px;
   border: 0.7px solid #D4DBE5;
   position: relative;
 }
-.pop-browse__content {
+.pop-new-card__content {
   display: block;
   text-align: left;
 }
-.pop-browse__content .categories__theme {
-  opacity: 1;
-}
-.pop-browse__content .theme-down {
-  display: none;
-  margin-bottom: 20px;
-}
-.pop-browse__content .theme-top {
-  display: block;
-}
-.pop-browse__top-block {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 18px;
-}
-.pop-browse__ttl {
+.pop-new-card__ttl {
   color: #000;
   font-size: 20px;
   font-weight: 600;
   line-height: 24px;
+  margin-bottom: 20px;
 }
-.pop-browse__wrap {
+.pop-new-card__close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: #94A6BE;
+  cursor: pointer;
+}
+.pop-new-card__close:hover {
+  color: #000000;
+}
+.pop-new-card__wrap {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
 }
-.pop-browse__form {
+.pop-new-card__form {
   max-width: 370px;
   width: 100%;
   display: block;
   margin-bottom: 20px;
 }
-.pop-browse__btn-browse, .pop-browse__btn-edit {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-}
-.pop-browse__btn-browse button, .pop-browse__btn-edit button {
-  height: 30px;
-  margin-bottom: 10px;
-  padding: 0 14px;
-}
-.pop-browse__btn-browse .btn-group button, .pop-browse__btn-edit .btn-group button {
-  margin-right: 8px;
-}
 
-.form-browse__block {
+.form-new__block {
   display: flex;
   flex-direction: column;
 }
-.form-browse__area {
-  max-width: 370px;
+.form-new__input, .form-new__area {
   width: 100%;
   outline: none;
   padding: 14px;
-  background: #EAEEF6;
+  background: transparent;
   border: 0.7px solid rgba(148, 166, 190, 0.4);
   border-radius: 8px;
   font-size: 14px;
   line-height: 1;
   letter-spacing: -0.14px;
+}
+.form-new__input::-moz-placeholder, .form-new__area::-moz-placeholder {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1px;
+  color: #94A6BE;
+  letter-spacing: -0.14px;
+}
+.form-new__input::placeholder, .form-new__area::placeholder {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1px;
+  color: #94A6BE;
+  letter-spacing: -0.14px;
+}
+.form-new__input {
+  margin: 20px 0;
+}
+.form-new__area {
+  max-width: 370px;
   margin-top: 14px;
   height: 200px;
 }
-.form-browse__area::-moz-placeholder {
-  font-weight: 400;
+.form-new__create {
+  width: 132px;
+  height: 30px;
+  background-color: #565EEF;
+  border-radius: 4px;
+  border: 0;
+  outline: none;
   font-size: 14px;
-  line-height: 1px;
-  color: #94A6BE;
-  letter-spacing: -0.14px;
-}
-.form-browse__area::placeholder {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1px;
-  color: #94A6BE;
-  letter-spacing: -0.14px;
+  font-weight: 500;
+  line-height: 1;
+  color: #FFFFFF;
+  float: right;
 }
 
-.status {
-  margin-bottom: 11px;
+.subttl {
+  color: #000;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
 }
-.status__p {
+
+.calendar {
+  width: 182px;
+  margin-bottom: 20px;
+}
+.calendar__ttl {
   margin-bottom: 14px;
+  padding: 0 7px;
 }
-.status__themes {
+.calendar__p {
+  color: #94A6BE;
+  font-size: 10px;
+  line-height: 1;
+}
+.calendar__p span {
+  color: #000000;
+}
+.calendar__block {
+  display: block;
+}
+.calendar__month {
+  color: #94A6BE;
+  font-size: 14px;
+  line-height: 25px;
+  font-weight: 600;
+}
+.calendar__content {
+  margin-bottom: 12px;
+}
+.calendar__days-names {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  margin: 7px 0;
+  padding: 0 7px;
+}
+.calendar__day-name {
+  color: #94A6BE;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.2px;
+}
+.calendar__cells {
+  width: 182px;
+  height: 126px;
   display: flex;
   flex-wrap: wrap;
+}
+.calendar__cell {
+  width: 22px;
+  height: 22px;
+  margin: 2px;
+  border-radius: 50%;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  color: #94A6BE;
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: -0.2px;
+  cursor: pointer;
+}
+.calendar__nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding: 0 7px;
+}
+.calendar__period {
+  padding: 0 7px;
+}
+
+.nav__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav__action {
+  width: 18px;
+  height: 25px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav__action svg {
+  fill: #94A6BE;
+}
+
+._other-month {
+  opacity: 0;
+}
+
+._cell-day:hover {
+  color: #94A6BE;
+  background-color: #EAEEF6;
+}
+
+._active-day {
+  background-color: #94A6BE;
+  color: #FFFFFF;
+}
+
+._current {
+  font-weight: 700;
+}
+
+.categories {
+  margin-bottom: 20px;
+}
+.categories__themes {
+  display: flex;
+  flex-wrap: nowrap;
   align-items: flex-start;
   justify-content: flex-start;
 }
-.status__theme {
+.categories__p {
+  margin-bottom: 14px;
+}
+.categories__theme {
+  display: inline-block;
+  width: auto;
+  height: 30px;
+  padding: 8px 20px;
   border-radius: 24px;
-  border: 0.7px solid rgba(148, 166, 190, 0.4);
-  color: #94A6BE;
-  padding: 11px 14px 10px;
   margin-right: 7px;
-  margin-bottom: 7px;
+  opacity: 0.4;
 }
-.status__theme p {
+.categories__theme p {
   font-size: 14px;
-  line-height: 1;
-  letter-spacing: -0.14px;
-}
-
-._btn-bor {
-  border-radius: 4px;
-  border: 0.7px solid var(--palette-navy-60, #565EEF);
-  outline: none;
-  background: transparent;
-  color: #565EEF;
-}
-._btn-bor a {
-  color: #565EEF;
-}
-
-._btn-bg {
-  border-radius: 4px;
-  background: #565EEF;
-  border: none;
-  outline: none;
-  color: #FFFFFF;
-}
-._btn-bg a {
-  color: #FFFFFF;
-}
-
-._hide {
-  display: none;
-}
-
-._dark {
-  display: none;
+  font-weight: 600;
+  line-height: 14px;
+  white-space: nowrap;
 }
 </style>

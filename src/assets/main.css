@@ -27,6 +27,7 @@ ul li {
   list-style: none;
 }
 
+
 @keyframes card-animation {
   0% {
     height: 0;

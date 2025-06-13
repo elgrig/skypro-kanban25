@@ -8,16 +8,50 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+      children: [ {
+        path: '/task/add',
+        name: 'task/add',
+        component: () => import('../views/NewTaskModal.vue'),
+      },
+      {
+        path: '/exit',
+        name: 'exit',
+        component: () => import('../views/ExitModal.vue')
+      },
+      {
+        path: '/task/:id',
+        name: 'task',
+        component: () => import('../views/EditTaskModal.vue')
+      }
+      ],
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
+      path: '/sign-in',
+      name: 'sign-in',
+      component: () => import('../views/SignInView.vue'),
     },
+    {
+      path: '/sign-up',
+      name: 'sign-up',
+      component: () => import('../views/SignUpView.vue'),
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      component: () => import('../views/NotFoundView.vue'),
+    }
   ],
 })
+
+router.beforeEach((to, from, next) => {
+    const token = localStorage.getItem('userInfo');
+   if (to.meta.requiresAuth && !token) {
+      next('/sign-in');
+   } else {
+      next(); 
+   }
+});
 
 export default router

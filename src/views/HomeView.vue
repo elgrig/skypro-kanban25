@@ -1,8 +1,5 @@
 <script setup>
 import BaseHeader from '@/components/BaseHeader.vue'
-import EditTask from '@/components/EditTask.vue'
-import ExitModal from '@/components/ExitModal.vue'
-import NewCardModal from '@/components/NewCardModal.vue'
 import TaskDesk from '@/components/TaskDesk.vue'
 import { onMounted, ref } from 'vue'
 import BaseLoader from '@/components/BaseLoader.vue'
@@ -18,23 +15,14 @@ onMounted(() => {
 <template>
   <main>
     <div class="">
-      <!-- pop-up start-->
-
-      <ExitModal />
-
-      <NewCardModal />
-
-      <EditTask />
-
-      <!-- pop-up end-->
-
       <BaseHeader />
       <main class="main" :loading="loading">
-        <Transition name="loading"
-          ><BaseLoader v-if="loading" />
-          <TaskDesk v-else />
+        <Transition name="loading">
+        <BaseLoader v-if="loading" />
+        <TaskDesk v-else />
         </Transition>
       </main>
+      <RouterView />
     </div>
   </main>
 </template>

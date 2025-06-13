@@ -7,8 +7,8 @@
 						</div>
 						<form class="pop-exit__form" id="formExit" action="#">
 							<div class="pop-exit__form-group">
-								<button class="pop-exit__exit-yes _hover01" id="exitYes"><a href="modal/signin.html">Да, выйти</a> </button>
-								<button class="pop-exit__exit-no _hover03" id="exitNo"><a href="main.html">Нет, остаться</a> </button>
+								<button @click="logout" class="pop-exit__exit-yes _hover01" id="exitYes">Да, выйти</button>
+								<RouterLink to="/"><button class="pop-exit__exit-no _hover03" id="exitNo">Нет, остаться</button></RouterLink>
 							</div>
 						</form>
 					</div>
@@ -17,12 +17,21 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+
+function logout(e) {
+  e.preventDefault()
+  localStorage.removeItem('userInfo')
+  router.push('/sign-in')
+}
 
 </script>
 
 <style lang="scss" scoped>
 .pop-exit {
-  display: none;
+  display: block;
   width: 100%;
   height: 100%;
   min-width: 320px;
@@ -61,6 +70,15 @@
   line-height: 30px;
   letter-spacing: -0.4px;
   margin-bottom: 20px;
+}
+/* .pop-exit__form {
+что тут должно быть??? В верстке этого стиля нет, но без него кнопки стоят криво.
+} */
+.pop-exit__form-group {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .pop-exit__exit-yes {
   width: 153px;
@@ -101,20 +119,33 @@
   line-height: 21px;
   font-weight: 500;
   letter-spacing: -0.14px;
-  color: #FFFFFF;
+  color:#565EEF;
 }
 .pop-exit__exit-no a {
   width: 100%;
   height: 100%;
-  color: #565EEF;
+  color:  #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.pop-exit__form-group {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+._hover01:hover {
+  background-color: #33399b;
+}
+
+._hover02:hover, .header__user:hover {
+  color: #33399b;
+}
+._hover02:hover::after, .header__user:hover::after {
+  border-left-color: #33399b;
+  border-bottom-color: #33399b;
+}
+
+._hover03:hover {
+  background-color: #33399b;
+  color: #FFFFFF;
+}
+._hover03:hover a {
+  color: #FFFFFF;
 }
 </style>
