@@ -118,7 +118,7 @@
 							</div>
 							<div class="pop-browse__btn-browse ">
 								<div class="btn-group">
-									<button class="btn-browse__edit _btn-bor _hover03"><a href="#">Редактировать задачу</a></button>
+									<button @click="editTasks" class="btn-browse__edit _btn-bor _hover03"><a href="#">Редактировать задачу</a></button>
 									<button class="btn-browse__delete _btn-bor _hover03"><a href="#">Удалить задачу</a></button>
 								</div>
 								<RouterLink to="/"><button class="btn-browse__close _btn-bg _hover01">Закрыть</button></RouterLink>
@@ -127,7 +127,7 @@
 								<div class="btn-group">
 									<button class="btn-edit__edit _btn-bg _hover01"><a href="#">Сохранить</a></button>
 									<button class="btn-edit__edit _btn-bor _hover03"><a href="#">Отменить</a></button>
-									<button class="btn-edit__delete _btn-bor _hover03" id="btnDelete"><a href="#">Удалить задачу</a></button>
+									<button @click="deleteTasks" class="btn-edit__delete _btn-bor _hover03" id="btnDelete"><a href="#">Удалить задачу</a></button>
 								</div>
 								<button class="btn-edit__close _btn-bg _hover01">Закрыть</button>
 							</div>
@@ -140,17 +140,46 @@
 <script setup>
 import { RouterLink } from 'vue-router';
 import { useRouter } from 'vue-router';
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import { taskList } from '@/components/tasks';
+import { editTask, deleteTask } from '@/services/api';
 
-const route = useRouter();
-const task = computed(() => {
-  return taskList.value.find((task) => task.id === route.params.id || {
-    name: '',
-    translation: '',
-  })
-})
+const tasks = ref([])
+const error = ref('')
 
+// const route = useRouter();
+// const task = computed(() => {
+//   return taskList.value.find((task) => task.id === route.params.id || {
+//     name: '',
+//     translation: '',
+//   })
+// })
+
+const editTasks = async () => {
+  try {
+    const data = await editTask({
+      token: 'ksdfsksdfjfsdjk',
+      id: '',
+      task: '',
+    })
+    if (data) tasks.value = data
+  } catch(err) {
+    error.value = err.message
+  }
+}
+
+const deleteTasks = async () => {
+  try {
+    const data = await deleteTask({
+      token: 'ksdfsksdfjfsdjk',
+      id: '',
+      task: '',
+    })
+    if (data) tasks.value = data
+  } catch(err) {
+    error.value = err.message
+  }
+}
 </script>
 
 <style lang="scss" scoped>

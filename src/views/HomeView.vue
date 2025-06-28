@@ -1,15 +1,36 @@
 <script setup>
 import BaseHeader from '@/components/BaseHeader.vue'
 import TaskDesk from '@/components/TaskDesk.vue'
-import { onMounted, ref } from 'vue'
 import BaseLoader from '@/components/BaseLoader.vue'
+import { onMounted, ref } from 'vue'
+import { fetchTasks } from '@/services/api'
 
 const loading = ref(true)
-onMounted(() => {
-  setTimeout(() => {
+const tasks = ref([])
+const error = ref('')
+
+// onMounted(() => {
+//   setTimeout(() => {
+//     loading.value = false
+//   }, 1000)
+// })
+
+const getTasks = async () => {
+  try {
+    loading.value = true
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+    const data = await fetchTasks({
+      token: userInfo.token,
+    })
+  if (data) tasks.value = data
+  } catch (err) {
+    error.value = err.message
+  } finally {
     loading.value = false
-  }, 1000)
-})
+  }
+}
+
+onMounted(getTasks)
 </script>
 
 <template>
@@ -19,7 +40,7 @@ onMounted(() => {
       <main class="main" :loading="loading">
         <Transition name="loading">
         <BaseLoader v-if="loading" />
-        <TaskDesk v-else />
+        <TaskDesk :tasks="tasks" :error="error" v-else />
         </Transition>
       </main>
       <RouterView />
