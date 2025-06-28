@@ -17,11 +17,11 @@
 
 <script setup>
 import BaseTask from './BaseTask.vue';
-import { taskList } from './tasks';
 
 defineProps({
   title: String,
   iscolumn: Boolean,
+  taskList: Object,
 })
 
 </script>

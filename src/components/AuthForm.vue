@@ -2,39 +2,124 @@
   <div class="wrapper">
     <div class="container-signin">
       <div class="modal">
-				<div class="modal__block">
-					<div class="modal__ttl">
-						<h2>{{ isSignUp ? 'Регистрация' : 'Вход' }}</h2>
-					</div>
-					<form class="modal__form-login" id="formLogUp" action="#">
-            <input v-show="isSignUp" class="modal__input first-name" type="text" name="first-name" id="first-name" placeholder="Имя">
-						<input class="modal__input" type="text" name="login" id="formlogin" placeholder="Эл. почта">
-						<input class="modal__input" type="password" name="password" id="formpassword" placeholder="Пароль">
-						<button class="modal__btn-enter _hover01" id="btnEnter"><a :onClick="handleSignIn" >Войти</a></button>
-						<div class="modal__form-group">
-							<p>{{ isSignUp ? 'Уже есть аккаунт?' : 'Нужно зарегистрироваться?' }}</p>
-							<RouterLink :to="isSignUp ? '/sign-in' : '/sign-up'"><a>{{ isSignUp ? 'Войдите здесь' : 'Регистрируйтесь здесь' }}</a></RouterLink>
-						</div>
-					</form>
-				</div>
+        <div class="modal__block">
+          <div class="modal__ttl">
+            <h2>{{ isSignUp ? 'Регистрация' : 'Вход' }}</h2>
+          </div>
+          <form @submit="handleSubmit" class="modal__form-login" id="formLogUp" action="#">
+            <input
+              v-model="name"
+              v-show="isSignUp"
+              class="modal__input first-name"
+              type="text"
+              name="first-name"
+              id="first-name"
+              placeholder="Имя"
+            />
+            <input
+              v-model="login"
+              class="modal__input"
+              type="text"
+              name="login"
+              id="formlogin"
+              placeholder="Эл. почта"
+            />
+            <input
+              v-model="password"
+              class="modal__input"
+              type="password"
+              name="password"
+              id="formpassword"
+              placeholder="Пароль"
+            />
+            <button class="modal__btn-enter _hover01" id="btnEnter">
+              <a :onClick="handleSubmit">{{ isSignUp ? 'Зарегистрироваться' : 'Войти' }}</a>
+            </button>
+            <div class="modal__form-group">
+              <p>{{ isSignUp ? 'Уже есть аккаунт?' : 'Нужно зарегистрироваться?' }}</p>
+              <RouterLink :to="isSignUp ? '/sign-in' : '/sign-up'">
+                <a>{{ isSignUp ? 'Войдите здесь' : 'Регистрируйтесь здесь' }}</a>
+              </RouterLink>
+              <div v-show="error">{{ error }}</div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+import { signUp, signIn } from '@/services/auth'
 
-defineProps ({
+const router = useRouter()
+const props = defineProps({
   isSignUp: Boolean,
 })
 
-const router = useRouter() // Инициализация роутера
+const name = ref('')
+const login = ref('')
+const password = ref('')
+const errors = ref({
+  name: false,
+  login: false,
+  password: false,
+})
+const error = ref('')
 
-async function handleSignIn(e) {
-   e.preventDefault() // Предотвращаем перезагрузку страницы
-   localStorage.setItem('userInfo', 'true') // Сохраняем флаг авторизации
-   router.push('/') // Перенаправляем на главную страницу
+function validateForm() {
+
+  let isValid = true
+  error.value = ''
+
+  errors.value.name = false
+  errors.value.login = false
+  errors.value.password = false
+
+  if (props.isSignUp && !name.value.trim() === "") {
+    errors.value.name = false
+    isValid = false
+  }
+
+  if (password.value.trim() === "") {
+    errors.value.password = true
+    isValid = false
+  }
+
+  if (!isValid) {
+    error.value = 'Пожалуйста, заполните все обязательные поля'
+  }
+
+  return isValid
+}
+
+async function handleSubmit(event) {
+  event.preventDefault()
+
+  if (!validateForm()) {
+  return
+  }
+
+  try {
+    const data = props.isSignUp
+      ? await signUp({
+        name: name.value,
+        login: login.value,
+        password: password.value
+      })
+      : await signIn({
+        login: login.value,
+        password: password.value
+      })
+    if (data) {
+      localStorage.setItem('userInfo', JSON.stringify(data))
+      router.push('/')
+    }
+  } catch (err) {
+    error.value = err.message
+  }
 }
 </script>
 
@@ -69,13 +154,13 @@ html,
 body {
   width: 100%;
   height: 100%;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 div,
 button,
 a {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .wrapper {
@@ -83,7 +168,7 @@ a {
   height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
-  background-color: #EAEEF6;
+  background-color: #eaeef6;
 }
 
 .container-signup {
@@ -110,12 +195,12 @@ a {
 .modal__block {
   display: block;
   margin: 0 auto;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   max-width: 368px;
   width: 100%;
   padding: 50px 60px;
   border-radius: 10px;
-  border: 0.7px solid #D4DBE5;
+  border: 0.7px solid #d4dbe5;
   box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
 }
 .modal__ttl h2 {
@@ -145,25 +230,25 @@ a {
   padding: 10px 8px;
 }
 .modal__input::-moz-placeholder {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 21px;
   letter-spacing: -0.28px;
-  color: #94A6BE;
+  color: #94a6be;
 }
 .modal__input::placeholder {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 21px;
   letter-spacing: -0.28px;
-  color: #94A6BE;
+  color: #94a6be;
 }
 .modal__btn-enter {
   width: 100%;
   height: 30px;
-  background-color: #565EEF;
+  background-color: #565eef;
   border-radius: 4px;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -176,12 +261,12 @@ a {
   line-height: 21px;
   font-weight: 500;
   letter-spacing: -0.14px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 .modal__btn-enter a {
   width: 100%;
   height: 100%;
-  color: #FFFFFF;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -189,7 +274,7 @@ a {
 .modal__btn-signup-ent {
   width: 100%;
   height: 30px;
-  background-color: #565EEF;
+  background-color: #565eef;
   border-radius: 4px;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -202,12 +287,12 @@ a {
   line-height: 21px;
   font-weight: 500;
   letter-spacing: -0.14px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 .modal__btn-signup-ent a {
   width: 100%;
   height: 100%;
-  color: #FFFFFF;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -229,7 +314,7 @@ a {
 
 @media screen and (max-width: 375px) {
   .modal {
-    background-color: #FFFFFF;
+    background-color: #ffffff;
   }
   .modal__block {
     max-width: 368px;

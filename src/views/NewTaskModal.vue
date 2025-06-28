@@ -9,11 +9,22 @@
 								<form class="pop-new-card__form form-new" id="formNewCard" action="#">
 									<div class="form-new__block">
 										<label for="formTitle" class="subttl">Название задачи</label>
-										<input class="form-new__input" type="text" name="name" id="formTitle" placeholder="Введите название задачи..." autofocus>
+										<input
+                      class="form-new__input"
+                      type="text"
+                      name="name"
+                      id="formTitle"
+                      placeholder="Введите название задачи..."
+                      v-model="taskName" autofocus>
 									</div>
 									<div class="form-new__block">
 										<label for="textArea" class="subttl">Описание задачи</label>
-										<textarea class="form-new__area" name="text" id="textArea"  placeholder="Введите описание задачи..."></textarea>
+										<textarea
+                      class="form-new__area"
+                      name="text"
+                      id="textArea"
+                      placeholder="Введите описание задачи..."
+                      v-model="taskDescription"></textarea>
 									</div>
 								</form>
 								<div class="pop-new-card__calendar calendar">
@@ -104,7 +115,7 @@
 									</div>
 								</div>
 							</div>
-							<button class="form-new__create _hover01" id="btnCreate">Создать задачу</button>
+							<button @click="createTask" class="form-new__create _hover01" id="btnCreate">Создать задачу</button>
 						</div>
 					</div>
 				</div>
@@ -113,6 +124,57 @@
 
 <script setup>
 import { RouterLink } from 'vue-router';
+import { ref } from 'vue';
+import { postTask } from '@/services/api';
+
+const tasks = ref([])
+const taskName = ref('');
+const taskDescription = ref('');
+
+const errors = ref({
+  name: false,
+  description: false,
+})
+
+const error = ref('')
+
+defineProps({
+  id: {
+    type: String,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  placeholder: {
+    type: String,
+    default: '',
+   },
+  type: {
+    type: String,
+    default: 'text',
+   },
+})
+
+// const model = defineModel();
+
+const createTask = async () => {
+  try {
+    const newTask = {
+      title: taskName.value,
+      description: taskDescription.value,
+    };
+
+    const data = await postTask({
+      token: 'bgc0b8awbwas6g5g5k5o5s5w606g37w3cc3bo3b83k39s3co3c83c03ck',
+      task: newTask,
+    })
+    if (data) tasks.value = data
+  } catch(err) {
+    error.value = err.message
+  }
+}
 </script>
 
 <style lang="scss" scoped>
