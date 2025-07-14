@@ -116,6 +116,7 @@
 								</div>
 							</div>
 							<button @click="createTask" class="form-new__create _hover01" id="btnCreate">Создать задачу</button>
+              <div>{{ error }}</div>
 						</div>
 					</div>
 				</div>
@@ -123,11 +124,13 @@
 </template>
 
 <script setup>
-import { RouterLink } from 'vue-router';
-import { ref } from 'vue';
+import { RouterLink, useRouter } from 'vue-router';
+import { ref, inject } from 'vue';
 import { postTask } from '@/services/api';
+import { statusList } from '@/components/tasks';
 
-const tasks = ref([])
+// const tasks = ref([])
+const router = useRouter()
 const taskName = ref('');
 const taskDescription = ref('');
 
@@ -135,6 +138,9 @@ const errors = ref({
   name: false,
   description: false,
 })
+
+const { user } = inject('auth')
+const { tasks } = inject('tasksData')
 
 const error = ref('')
 
@@ -163,14 +169,24 @@ const createTask = async () => {
   try {
     const newTask = {
       title: taskName.value,
+      topic: "Research",
+      status: statusList[status.value],
       description: taskDescription.value,
+      date: "2024-01-07T16:26:18.179Z"
     };
-
-    const data = await postTask({
-      token: 'bgc0b8awbwas6g5g5k5o5s5w606g37w3cc3bo3b83k39s3co3c83c03ck',
+    if (!newTask.title || !newTask.description ) {
+      errors.value.name = !newTask.title
+      errors.value.description = !newTask.description
+      error.value = 'Заполните все поля'
+      return
+    }
+    const newTasks = await postTask({
+      token: user.value.token,
       task: newTask,
     })
-    if (data) tasks.value = data
+    // if (data) tasks.value = data
+    tasks.value = newTasks
+    router.push('/')
   } catch(err) {
     error.value = err.message
   }

@@ -2,12 +2,15 @@
 import BaseHeader from '@/components/BaseHeader.vue'
 import TaskDesk from '@/components/TaskDesk.vue'
 import BaseLoader from '@/components/BaseLoader.vue'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, provide, inject, watch } from 'vue'
 import { fetchTasks } from '@/services/api'
 
 const loading = ref(true)
 const tasks = ref([])
 const error = ref('')
+const { user } = inject('auth')
+
+provide('tasksData', { tasks, loading, error })
 
 // onMounted(() => {
 //   setTimeout(() => {
@@ -16,11 +19,12 @@ const error = ref('')
 // })
 
 const getTasks = async () => {
+  if(!user.value.token) return
   try {
     loading.value = true
-    const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+    // const userInfo = JSON.parse(localStorage.getItem('userInfo'))
     const data = await fetchTasks({
-      token: userInfo.token,
+      token: user.value.token,
     })
   if (data) tasks.value = data
   } catch (err) {
@@ -30,7 +34,7 @@ const getTasks = async () => {
   }
 }
 
-onMounted(getTasks)
+watch(user, getTasks, { immediate: true })
 </script>
 
 <template>

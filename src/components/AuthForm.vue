@@ -51,8 +51,10 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { inject, ref } from 'vue'
 import { signUp, signIn } from '@/services/auth'
+
+const { setUser } = inject('auth')
 
 const router = useRouter()
 const props = defineProps({
@@ -114,7 +116,8 @@ async function handleSubmit(event) {
         password: password.value
       })
     if (data) {
-      localStorage.setItem('userInfo', JSON.stringify(data))
+      // localStorage.setItem('userInfo', JSON.stringify(data))
+      setUser(data)
       router.push('/')
     }
   } catch (err) {

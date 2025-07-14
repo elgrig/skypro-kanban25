@@ -138,14 +138,16 @@
 </template>
 
 <script setup>
-import { RouterLink } from 'vue-router';
-import { useRouter } from 'vue-router';
-import { ref, computed } from 'vue';
+import { RouterLink, useRoute, useRouter } from 'vue-router';
+import { ref, computed, inject } from 'vue';
 import { taskList } from '@/components/tasks';
+
 import { editTask, deleteTask } from '@/services/api';
 
-const tasks = ref([])
+const route = useRoute()
 const error = ref('')
+const { tasks } = inject('tasksData')
+const { user } = inject('auth')
 
 // const route = useRouter();
 // const task = computed(() => {
@@ -155,25 +157,54 @@ const error = ref('')
 //   })
 // })
 
-const editTasks = async () => {
+const isEditing = ref(false)
+const editableTask = ref({
+  name:'',
+  description: '',
+})
+
+const task = computed(
+  () => tasks.value.find((t) => t._id === route.params.id) || { name:'', description:'' },
+)
+
+const startEditing = () => {
+  // console.log(task.value)
+  editableTask.value = { name: task.value.name, description: task.value.description }
+  isEditing.value = true
+}
+
+const saveChanges = async () => {
   try {
-    const data = await editTask({
-      token: 'ksdfsksdfjfsdjk',
-      id: '',
-      task: '',
+    const updateTasks = await editTask({
+      token: user.value.token,
+      id: route.params.id,
+      task: editableTask.value,
     })
-    if (data) tasks.value = data
-  } catch(err) {
-    error.value = err.message
+    tasks.value = updateTasks
+    isEditing.value = false
+  } catch(error) {
+    console.error('Ошибка при сохранении изменений:', error.message)
   }
 }
+
+// const editTasks = async () => {
+//   try {
+//     const data = await editTask({
+//       token: user.value.token,
+//       id: '',
+//       task: '',
+//     })
+//     if (data) tasks.value = data
+//   } catch(err) {
+//     error.value = err.message
+//   }
+// }
 
 const deleteTasks = async () => {
   try {
     const data = await deleteTask({
-      token: 'ksdfsksdfjfsdjk',
-      id: '',
-      task: '',
+      token: user.value.token,
+      id: route.params.id,
     })
     if (data) tasks.value = data
   } catch(err) {
